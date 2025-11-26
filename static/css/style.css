@@ -1,0 +1,434 @@
+:root {
+    /* Light Theme Variables */
+    --bg-color: #f4f7f6;
+    --text-main: #2d3436;
+    --text-muted: #636e72;
+    --card-bg: #ffffff;
+    --primary-color: #0984e3;
+    --primary-hover: #00cec9;
+    --accent-color: #6c5ce7;
+    --border-color: #dfe6e9;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.12);
+    --input-bg: #ffffff;
+}
+
+body.dark-mode {
+    /* Dark Theme Variables */
+    --bg-color: #1e1e2e;
+    --text-main: #dfe6e9;
+    --text-muted: #b2bec3;
+    --card-bg: #2d2d42;
+    --primary-color: #74b9ff;
+    --primary-hover: #0984e3;
+    --accent-color: #a29bfe;
+    --border-color: #44445a;
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+    --input-bg: #232334;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    line-height: 1.6;
+}
+
+/* Layout */
+.app-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+.main-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 0;
+    margin-bottom: 40px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--primary-color);
+}
+
+.brand i { font-size: 1.5rem; }
+.brand h1 { font-weight: 700; font-size: 1.5rem; color: var(--text-main); }
+
+.theme-btn {
+    background: none;
+    border: 2px solid var(--border-color);
+    color: var(--text-main);
+    padding: 8px 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+.theme-btn:hover {
+    background-color: var(--border-color);
+}
+
+/* Search Card */
+.search-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 40px;
+    text-align: center;
+    box-shadow: var(--shadow-md);
+    max-width: 600px;
+    margin: 0 auto 40px auto;
+}
+
+.subtitle {
+    color: var(--text-muted);
+    margin-bottom: 25px;
+}
+
+.input-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 12px 16px;
+    border: 2px solid var(--border-color);
+    background-color: var(--input-bg);
+    color: var(--text-main);
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+}
+
+input[type="text"]:focus {
+    border-color: var(--primary-color);
+}
+
+.btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    justify-content: center;
+}
+
+.btn.primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn.primary:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.btn.secondary {
+    background-color: transparent;
+    color: var(--text-main);
+    border: 1px solid var(--border-color);
+    width: 100%;
+}
+
+.btn.secondary:hover {
+    background-color: var(--border-color);
+}
+
+.divider {
+    margin: 15px 0;
+    position: relative;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.divider::before, .divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 40%;
+    height: 1px;
+    background-color: var(--border-color);
+}
+.divider::before { left: 0; }
+.divider::after { right: 0; }
+
+.error-message {
+    color: #ff6b6b;
+    margin-top: 15px;
+    font-weight: 500;
+    background: rgba(255, 107, 107, 0.1);
+    padding: 10px;
+    border-radius: 6px;
+}
+
+/* Results Area */
+.results-container {
+    animation: slideUp 0.5s ease forwards;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 20px;
+    padding: 0 10px;
+}
+
+.ip-display .label {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.ip-display h2 {
+    font-size: 2rem;
+    color: var(--primary-color);
+}
+
+.country-display {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.flag-icon {
+    height: 30px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Result Grid & Map */
+.result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* Updated Map Wrapper */
+.map-wrapper {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 20px; /* Increased to match detail-group */
+    box-shadow: var(--shadow-sm);
+    height: 480px; /* Increased height to accommodate new text */
+    display: flex;
+    flex-direction: column;
+}
+
+.map-header h4 {
+    color: var(--accent-color);
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1.1rem; /* Same as h4 in detail-group (implicitly) */
+    /* Note: .detail-group h4 styles don't apply here automatically, 
+       so we replicate key accent styles */
+}
+
+.map-header p {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 15px;
+}
+
+#map {
+    flex: 1;
+    width: 100%;
+    border-radius: 12px;
+    z-index: 1; /* Keep below nav overlays if any */
+}
+
+.details-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.detail-group {
+    background: var(--card-bg);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+}
+
+.detail-group h4 {
+    color: var(--accent-color);
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+}
+
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Center align for copy icon/text */
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+}
+
+/* UPDATED HERE: 
+   Changed from --text-muted to --text-main to make labels (City:, Region:) 
+   darker/blacker as requested.
+*/
+.detail-row span:first-child {
+    color: var(--text-main); /* Changed from muted to main for higher contrast */
+    font-weight: 500;       /* Added weight to make it stand out more */
+}
+
+.detail-row span:last-child {
+    font-weight: 600;
+    text-align: right;
+}
+
+/* Utilities */
+.hidden { display: none !important; }
+
+.loader {
+    text-align: center;
+    margin: 40px 0;
+    color: var(--text-muted);
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--border-color);
+    border-top: 4px solid var(--primary-color);
+    border-radius: 50%;
+    margin: 0 auto 10px auto;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+footer {
+    margin-top: auto;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    padding-top: 40px;
+}
+
+footer a { color: var(--primary-color); text-decoration: none; }
+
+/* Responsive */
+@media (max-width: 768px) {
+    .result-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .map-wrapper {
+        height: 400px;
+        order: -1; /* Map on top on mobile */
+    }
+    
+    .input-group {
+        flex-direction: column;
+    }
+    
+    .result-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
+
+/* --- CLICK TO COPY & TOOLTIP STYLES --- */
+
+.copy-container {
+    position: relative;
+    cursor: pointer;
+    display: inline-flex; /* Keeps text inline but allows positioning */
+    align-items: center;
+}
+
+/* Hover effect to indicate it's clickable */
+.copy-container:hover .text-val {
+    color: var(--primary-color);
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-decoration-thickness: 1px;
+}
+
+.tooltip {
+    /* Initial State */
+    visibility: hidden;
+    opacity: 0;
+    
+    /* Look & Feel */
+    background-color: var(--primary-color); /* Matches your theme */
+    color: #fff;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    pointer-events: none; /* Prevents tooltip from interfering with clicks */
+
+    /* Positioning: CENTER TOP */
+    position: absolute;
+    bottom: 120%; /* Push it up above the text */
+    left: 50%;
+    transform: translateX(-50%) translateY(5px);
+    z-index: 100; /* Ensure it sits on top of everything */
+
+    /* Animation */
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* The little arrow pointing down */
+.tooltip::after {
+    content: "";
+    position: absolute;
+    top: 100%; /* Bottom of tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: var(--primary-color) transparent transparent transparent;
+}
+
+/* Active State */
+.tooltip.show {
+    visibility: visible;
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}

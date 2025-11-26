@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="app-container">
+    <!-- Header / Nav -->
+    <header class="main-header">
+        <div class="brand">
+            <i class="fa-solid fa-globe"></i>
+            <h1>IP GeoLocate</h1>
+        </div>
+        <button id="theme-toggle" class="theme-btn" aria-label="Toggle Dark Mode">
+            <i class="fa-solid fa-moon"></i>
+        </button>
+    </header>
+
+    <main>
+        <!-- Search Section -->
+        <section class="search-card">
+            <div class="card-content">
+                <h2>Discover IP Details</h2>
+                <p class="subtitle">Enter an IP address or locate yourself instantly.</p>
+                
+                <form id="lookup-form" onsubmit="return false;">
+                    <div class="input-group">
+                        <input type="text" id="ip-input" placeholder="e.g. 8.8.8.8 (IPv4) or 2001:4860... (IPv6)" aria-label="IP Address">
+                        <button type="submit" id="btn-search" class="btn primary">
+                            <i class="fa-solid fa-magnifying-glass"></i> Lookup
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="divider"><span>OR</span></div>
+                
+                <button id="btn-my-ip" class="btn secondary">
+                    <i class="fa-solid fa-location-crosshairs"></i> Use My IP
+                </button>
+
+                <div id="error-msg" class="error-message hidden"></div>
+            </div>
+        </section>
+
+        <!-- Loading Indicator -->
+        <div id="loader" class="loader hidden">
+            <div class="spinner"></div>
+            <p>Fetching Geolocation Data...</p>
+        </div>
+
+        <!-- Results Section -->
+        <section id="results-area" class="results-container hidden">
+            
+            <!-- Header Info -->
+            <div class="result-header">
+                <div class="ip-display">
+                    <span class="label">IP Address</span>
+                    <!-- COPY ENABLED -->
+                    <div class="copy-container" onclick="copyText(this)">
+                        <h2 id="res-ip" class="text-val">---</h2>
+                        <span class="tooltip">Copied!</span>
+                    </div>
+                </div>
+                <div class="country-display">
+                    <img id="res-flag" src="" alt="Flag" class="flag-icon hidden">
+                    <h3 id="res-country">---</h3>
+                </div>
+            </div>
+
+            <div class="result-grid">
+                <!-- Map Column (UPDATED) -->
+                <div class="map-wrapper">
+                    <div class="map-header">
+                        <h4><i class="fa-solid fa-map-location-dot"></i> Map Visualization</h4>
+                        <p>The marker shows the approximate geolocation of the IP address.</p>
+                    </div>
+                    <div id="map"></div>
+                </div>
+
+                <!-- Details Column -->
+                <div class="details-wrapper">
+                    
+                    <!-- Group 1: Location -->
+                    <div class="detail-group">
+                        <h4><i class="fa-solid fa-map-pin"></i> Location</h4>
+                        
+                        <div class="detail-row">
+                            <span>Capital:</span> 
+                            <div class="copy-container" onclick="copyText(this)">
+                                <span id="res-capital" class="text-val">-</span>
+                                <span class="tooltip">Copied!</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-row">
+                            <span>City:</span> 
+                            <div class="copy-container" onclick="copyText(this)">
+                                <span id="res-city" class="text-val">-</span>
+                                <span class="tooltip">Copied!</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-row">
+                            <span>Region:</span> 
+                            <div class="copy-container" onclick="copyText(this)">
+                                <span id="res-region" class="text-val">-</span>
+                                <span class="tooltip">Copied!</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-row">
+                            <span>Zip/Postal:</span> 
+                            <div class="copy-container" onclick="copyText(this)">
+                                <span id="res-postal" class="text-val">-</span>
+                                <span class="tooltip">Copied!</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-row">
+                            <span>Coordinates:</span> 
+                            <div class="copy-container" onclick="copyText(this)">
+                                <span id="res-coords" class="text-val">-</span>
+                                <span class="tooltip">Copied!</span>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-row">
+                            <span>Continent:</span> 
+                            <div class="copy-container" onclick="copyText(this)">
+                                <span id="res-continent" class="text-val">-</span>
+                                <span class="tooltip">Copied!</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Group 2: Network -->
+                    <div class="detail-group">
+                        <h4><i class="fa-solid fa-network-wired"></i> Network</h4>
+                        
+                         <div class="detail-row">
+                            <span>IP Version:</span> 
+                            <div class="copy-container" onclick="copyText(this)">
+                                <span id="res-version" class="text-val">-</span>
+                                <span class="tooltip">Copied!</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-row">
+                            <span>ASN:</span> 
+                            <div class="copy-container" onclick="copyText(this)">
+                                <span id="res-asn" class="text-val">-</span>
+                                <span class="tooltip">Copied!</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-row">
+                            <span>ISP:</span> 
+                            <div class="copy-container" onclick="copyText(this)">
+                                <span id="res-org" class="text-val">-</span>
+                                <span class="tooltip">Copied!</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-row">
+                            <span>Hostname:</span> 
+                            <div class="copy-container" onclick="copyText(this)">
+                                <span id="res-host" class="text-val">-</span>
+                                <span class="tooltip">Copied!</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Group 3: Local Data -->
+                    <div class="detail-group">
+                        <h4><i class="fa-solid fa-clock"></i> Local Data</h4>
+                        
+                        <div class="detail-row">
+                            <span>Timezone:</span> 
+                            <div class="copy-container" onclick="copyText(this)">
+                                <span id="res-timezone" class="text-val">-</span>
+                                <span class="tooltip">Copied!</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-row">
+                            <span>Currency:</span> 
+                            <div class="copy-container" onclick="copyText(this)">
+                                <span id="res-currency" class="text-val">-</span>
+                                <span class="tooltip">Copied!</span>
+                            </div>
+                        </div>
+
+                         <div class="detail-row">
+                            <span>Calling Code:</span> 
+                            <div class="copy-container" onclick="copyText(this)">
+                                <span id="res-callcode" class="text-val">-</span>
+                                <span class="tooltip">Copied!</span>
+                            </div>
+                        </div>
+                         <div class="detail-row">
+                            <span>Population:</span> 
+                            <div class="copy-container" onclick="copyText(this)">
+                                <span id="res-pop" class="text-val">-</span>
+                                <span class="tooltip">Copied!</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Powered by <a href="https://ipapi.co" target="_blank">ipapi.co</a> & Leaflet</p>
+    </footer>
+</div>
+{% endblock %}

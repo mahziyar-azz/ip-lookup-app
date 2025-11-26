@@ -1,0 +1,15 @@
+ip_lookup_app/
+│
+├── app.py                # The main Flask application entry point
+├── services.py           # Helper module to handle ipapi.co requests
+│
+├── static/               # Folder for static assets (CSS, JS, Images)
+│   ├── css/
+│   │   └── style.css     # Styles for dark/light theme and layout
+│   │
+│   └── js/
+│       └── main.js       # Frontend logic (Map init, API fetch, DOM updates)
+│
+└── templates/            # Folder for HTML templates
+    ├── base.html         # Base layout (imports CSS, JS, Fonts, Leaflet)
+    └── index.html        # Main page content (Search form, Results, Map container)
